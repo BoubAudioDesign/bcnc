@@ -1,0 +1,208 @@
+#!/usr/bin/php -q
+<?php
+error_reporting(E_ALL & ~(E_STRICT|E_NOTICE|E_WARNING));
+
+require "classes.php";
+ 
+/* Autorise l'exécution infinie du script, en attente de connexion. */
+set_time_limit(0);
+ 
+/* Active le vidage implicite des buffers de sortie, pour que nous
+ * puissions voir ce que nous lisons au fur et à mesure. */
+ob_implicit_flush();
+
+/* Global */
+$tmpDir = '/tmp/'; 
+$address = '0.0.0.0';
+$port = 10000;
+
+$joueurs = array();
+$equipes = array();
+$jToken = 0;
+
+if( ! extension_loaded('pcntl' ) ) {
+	echo "This server requires PCNTL extension\n";
+	exit(-1);
+}
+
+if (($sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) === false) {
+	echo "socket_create() a échoué : raison : " . socket_strerror(socket_last_error()) . "\n";
+	die();
+}
+ 
+if (socket_bind($sock, $address, $port) === false) {
+	echo "socket_bind() a échoué : raison : " . socket_strerror(socket_last_error($sock)) . "\n";
+	die();
+}
+ 
+if (socket_listen($sock, 5) === false) {
+	echo "socket_listen() a échoué : raison : " . socket_strerror(socket_last_error($sock)) . "\n";
+	die();
+}
+
+echo "Server ready...\n";
+ 
+do {
+	if (($msgsock = socket_accept($sock)) === false) {
+		echo "socket_accept() a échoué : raison : " . socket_strerror(socket_last_error($sock)) . "\n";
+		break;
+	}
+	/* Send instructions. */
+	$msg = "count:4;\n";
+	socket_write($msgsock, $msg, strlen($msg));
+ 
+	do {
+		$rep = "";
+		$cmd = "";
+		$params = array();
+		if (false === ($buf = socket_read($msgsock, 2048, PHP_NORMAL_READ))) {
+			//echo "socket_read() a échoué : raison : " . socket_strerror(socket_last_error($msgsock)) . "\n";
+			break; // break 2;
+		}
+		//echo ">>$buf\n";
+		if (!$buf = trim($buf)) {
+			continue;
+		}
+
+		if ($buf == '00') {
+			socket_close($msgsock);
+			break 2;
+		}
+		
+		/* Commandes */
+		if (strpos($buf,"ID")==1) {
+			$clientID = substr($buf,4,8);
+			$buf = substr($buf,10);
+		}
+		
+		if (strpos($buf,":")>0) {
+			$cmd = strtoupper(substr($buf,0,strpos($buf,":")));
+			$sparams = substr($buf,strpos($buf,":")+1);
+			if (strpos($sParams,';')) {
+				$params = str_split(';',$sparams);
+			}
+		} else {
+			$cmd = strtoupper($buf);
+		}
+		echo 'CMD : '.$cmd." (".$sparams.")\n";
+		
+		if ($cmd == 'QUIT') {
+			break;
+		}
+		if ($cmd == 'PING') {
+			//$rep = '800: PONG';
+		}
+		/*
+		
+			Effacer tous les fichiers temporaires
+		
+		*/
+		if ($cmd == 'CLEARTMP') {
+			//unlink($tmpDir.'bcnc*.*');
+			array_map('unlink', glob($tmpDir."bcnc*.*"));
+			$rep = '200: Temp files cleared';
+		}
+		/*
+		
+			Démarrage d'une nouvelle partie :
+			- création d'un jeu neuf
+			- Mélange
+			- Coupe
+			
+			- Sauvegarde du stack
+		
+		*/
+		if ($cmd == 'START') {
+			// Préparer un jeu de cartes
+			$jeu = new jeu;
+			echo "-- Jeu neuf \n";	
+			echo "-- Melange + coupe \n";
+			$jeu->melangeJeu();
+			$jeu->coupeJeu(10);
+			// Créer 4 joueurs
+			for ($i=0; $i<4; $i++) {
+				$joueurs[$i] = new joueur("Joueur ".($i+1),$placeStr[$i]);
+			}
+			for ($i=0; $i<2; $i++) {
+				$equipes = new equipe($i, $joueur[$i],$joueur[$i+2]);
+			}
+			$jToken = 0;
+			saveJoueurs($joueurs);
+			$jeu->save();
+			
+			$rep="200: OK";
+		}
+		/*
+			Charge un stack (jeu complet) à partr d'une sauvegarde
+		*/
+		if ($cmd =='LOAD') {
+			$jeu = new jeu;
+			$jeu->load();
+			
+			$rep = "200: Game loaded";
+		}
+		
+		if ($cmd == 'STACK') {
+			if ($jeu) {
+				$rep = '200: '.$jeu->tout();
+			} else {
+				$rep = '400: Not started';
+			}
+		}
+		
+		/*
+		
+			CPLAYERS:<nombre de joueurs>
+			Créer des joueurs.
+		*/
+		
+		if ($cmd == 'MAIN') {
+			if ($params[0]>0) {
+				if ($joueurs[$params[0]]->mainCount()>0) {
+					$rep = '210: '.$joueurs[$params[0]]->mainStr();
+				} else {
+					$rep = '400: Empty';
+				}
+			}
+		}
+		
+		/*
+			
+			DISTRIB:<premier joueur>
+		
+		*/
+		if ($cmd == 'DISTRIB'){
+			if ($params[0]) {
+				$from = $params[0];
+			} else {
+				$from = 1;
+			}
+			for ($i=0; $i<4; $i++) {
+				$joueurs[$i]->resetMain();
+			}
+			$dCartes = array(3,2,3);
+			for ($r=0; $r<3; $r++) {
+				echo "Round $r\n";
+				for ($i=0; $i<4; $i++) {
+					$joueur = (($i+($from-1)) % 4);
+					echo "(".$joueur.")";
+					$jeu->distribueCarte($dCartes[$r],$joueurs[$joueur]);
+					echo "Donne  (".$joueur.") (".$joueurs[$joueur]->nom()."): ".$joueurs[$joueur]->mainStr()."\n";
+				}
+			}
+
+			$rep = '200: OK';
+		}
+		
+		
+		// Réponse
+		if ($rep) {
+			$talkback = $rep."\n";
+			socket_write($msgsock, $talkback, strlen($talkback));
+		}
+	} while (true);
+	socket_close($msgsock);
+} while (true);
+ 
+socket_close($sock);
+?>

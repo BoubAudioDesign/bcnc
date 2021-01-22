@@ -1,0 +1,98 @@
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+div {
+    /*border: 1px solid gray;*/
+}
+.header {
+    height: 10%;
+    font-weight: 200;
+    font-size: 2em;
+    text-align: center;
+}
+.container {
+    height: 80%;
+    /*border: 1px solid red;*/
+}
+.commands {
+    height: 60px;
+    padding-left: 
+}
+.btn {
+    margin-left: 10px;
+    height:30px;
+    min-width: 100px;
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: cornsilk;
+    float: left;
+    display: block;
+    font-size: 0.7em;
+    cursor: pointer;
+    text-align: center;
+}
+.btn:hover {
+    background-color:coral;
+}
+.atop {
+    margin: 1em;
+    border: 1px solid green;
+    height:200px;
+}
+.stateMain {
+    border: 1px solid gray;
+    height: 80%;
+}
+.sendCMD {
+    float:left;
+    width: 200px;
+}
+.clients {
+    float:left;
+}
+.clientlist {
+    list-style-type:none;
+    float:left;
+    display: block;
+    border: 1px solid gray;
+    background-color: azure;
+    height: 60px;
+    margin: 1em;
+    padding: 2px;
+}
+.clientlist li {
+    margin: 0;
+    padding: 2px;
+    font-weight: 200;
+}
+
+.clientid {
+    font-size: .5em;    
+}
+
+.clientaction {
+    background-color: orangered;
+    font-size: 0.5em;
+    font-weight: 800;
+    cursor: pointer;
+    text-align: center;
+}
+
+.state {
+    height:20%;
+    font-weight: 200;
+}
+.alog {
+    margin: 1em;
+    border: 1px solid red;
+    display: block;
+    height:80%;
+}
+.title {
+    text-align: left;
+    border-bottom: 1px solid gray;
+    font-weight: 200;
+    height: 1.5em;
+}

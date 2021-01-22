@@ -1,0 +1,435 @@
+body {
+    background-color: white;
+    font-family: '<roboto',sans-serif;
+    width:100%;
+    height:100%;
+    padding:0;
+    margin:1em;
+}
+
+#sortable { 
+    list-style-type: none;
+    /*
+    margin: 0; 
+    padding: 0;
+    width: 60%; 
+    */
+}
+#sortable li { 
+    /*
+    margin: 0 3px 3px 3px;
+    padding: 0.4em; 
+    padding-left: 1.5em; 
+    font-size: 1.4em; 
+    height: 18px; 
+    */
+}
+/*
+#sortable li span { position: absolute; margin-left: -1.3em; }
+*/
+
+div {
+	/*border: 1px solid lightgray;*/
+}
+
+.top {
+	background-color: #FEFCF1;
+	padding:1em;
+    height: 30%;
+    width:90%;
+}
+
+.selPlayer{
+    font-size: 0.6em;
+    
+}
+
+.cardBorder {
+  border: Opx solid gray;
+  border-radius: 2px;
+  /*cursor: pointer;*/
+}
+
+.nogood {
+	opacity: 0.60;
+}
+
+.annonces {
+	display: block;
+	clear: left;
+	/*border: 1px solid red;*/
+	margin-left: 2em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.selCouleur {
+	float: left;
+}
+
+.selContrat {
+	float: left;
+	margin-left: 1em;
+	/*margin-left: 1em;*/
+}
+
+.anContrat {
+	/*display: inline;*/
+	font-weight: 100;
+	float: left;
+	margin-left: .2em;
+	background-color: #fffcd9;
+	border: 1px solid darkgray;
+	border-radius: 4px;
+	padding: 3px;
+	min-width: 2em;
+	text-align: center;
+	cursor: pointer;
+}
+.anContrat:hover {
+	border: 1px solid black;
+}
+
+.anContrat.anSelected {
+	background-color: #fcf274;
+}
+
+.anNotAvailable {
+	background-color: #ffffff;
+	color: lightgray;
+}
+
+
+.anCouleur {
+	border: 1px solid darkgray;
+	border-radius: 4px;
+	float: left;
+	margin-left: .2em;
+	height:1.5em;
+	width: 2em;
+	cursor: pointer;
+	text-align:center;
+}
+.anCouleur img {
+	height:100%;
+	width: auto;
+}
+.anCouleur:hover {
+	border: 1px solid black;
+}
+.anCouleur.anSelected {
+	background-color: #fcf274;
+}
+.anValid {
+	border: 1px solid darkgray;
+	border-radius: 4px;
+	float: left;
+	background-color: #b6fabd;
+	min-width: 4em;
+	/*height: 1.5em;*/
+	margin-left: 1em;
+	text-align: center;
+	padding: 3px;
+	cursor: pointer;
+}
+.anValid:hover {
+	border: 1px solid black;
+	background: #00ff1a;
+}
+
+.myDeck {
+	background-color: #fffcd9;
+	border: 1px solid white;
+	border-radius: 10px;
+	/*margin-top: 1em;*/
+	padding: 10px;
+    min-height: calc(15vh + 20px);
+}
+
+.card {
+    float: left;
+    /*width: 5vw;*/
+    cursor: pointer;
+    margin-left:.5em;
+    border: 0px;
+    border-radius: 4px;
+}
+
+.card img {
+	width: auto;
+    height: 15vh;
+	max-height: 200px;
+	-webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4); 
+	box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);
+        border: 0px;
+    border-radius: 3%;
+
+}
+
+.card img:hover {
+  /*border: 1px solid #777;*/
+  margin-top :-10px;
+	-webkit-box-shadow: 0px 7px 10px 0px rgba(0,0,0,0.4); 
+	box-shadow: 0px 7px 10px 0px rgba(0,0,0,0.4);
+
+}
+
+div.note {
+  padding: 5px;
+  text-align: center;
+}
+
+.table {
+	margin-top: 1em;
+    height: 70%;
+}
+
+.tapis {
+	background-color:darkgreen;
+    float: left;
+    display: table;
+    border: 0px;
+	border-radius: 10px;
+	padding: 20px;
+    width: 60%;
+}
+
+.rightCol {
+    float: left;
+    width: 28%;
+    margin-left: 1em;
+}
+
+.tapisLigne {
+	display: table-row;
+}
+
+.tapisVide {
+    display: table-cell;
+	width: auto;
+	height: 100%;
+    /*border: 1px solid green;*/
+    vertical-align: middle;
+
+    /*position: absolute;*/
+}
+
+.tapis img {
+    width: auto;
+    height: 15vh;
+    max-height: 200px;
+
+}
+
+.tapisPlace {
+	display: table-cell;
+	/*width: 33w;*/
+	text-align: center;
+    padding-left: 2em;
+    padding-right: 2em;
+	/*height:33%;*/
+}
+
+/* Tableau Centre tapis */
+.tcContainer{
+    width: 100%;
+    /*border: 1px solid red;*/
+    border-collapse: collapse;
+    height: 100%;
+    color: white;
+    font-weight: 200;
+}
+
+.tcR {
+    height: auto;
+}
+
+/* Centre */
+.tc0 {
+    text-align: center;
+    width:auto;
+}
+
+.bDonne{
+    display: block;
+    height: 2em;
+    width: 4em;
+    background-color: cornsilk;
+    vertical-align: middle;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 200;
+    margin: 0 auto;
+    padding: .5em;
+}
+.bDonne:hover {
+    border: 2px solid black;
+}
+
+/* Nord */
+.tc1{
+    text-align: center;
+}
+
+/* Ouest */
+.tc4{    
+    height: auto;
+    width:20%;
+}
+
+/* Est */
+.tc2{
+    text-align: right;
+    height: auto;
+    width:20%;
+}
+
+/* Sud */
+.tc3{
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.tcContainer img {
+    height: 20px;
+    width: auto;
+}
+
+.scoresBox {
+    float: left;
+    width: 100%;
+    padding-bottom: .5em;
+    margin-top: .5em;
+    margin-bottom: 2em;
+    border-bottom: 1px solid lightgray;
+    cursor: pointer;
+}
+
+.scoresTitre {
+    margin:auto;
+    font-weight: 200;
+    text-align: center;
+    
+}
+
+.scores {
+    font-weight: 600;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.plis {
+	border:0px;
+	clear: left;
+}
+
+.lcard {
+  width: 4em;
+  height: auto;
+  margin-left: -1.5em;
+}
+
+
+.ptitre {
+	text-align:center;
+    font-weight: 200;
+	margin-left: 0;
+	margin-top:0;
+}
+.pliste{
+	background-color: #faf6c0;
+	border-radius: 10px;
+	margin-top:0em;
+	margin-left: .1em;
+	padding-top: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	min-height: 80px;
+}
+
+
+.plisIdx, div.enIdx {
+	float: left;
+	margin-right:1em;
+	height:100%;
+	opacity:.1;
+}
+.plisPlace {
+	float: left;
+	margin-right:1em;
+	height:100%;
+}
+.plisCartes {
+	float: left;
+	padding-left:1.5em;
+}
+.plisLigne, div.enLigne {
+	clear: left;
+	width:100%;
+	vertical-align: middle;
+	min-height:1.4em;
+}
+.enCouleur {
+	float: left;
+	width: 20px;
+	margin-left:1em;
+}
+.enPlace {
+	float: left;
+}
+
+.enLevel {
+	float: left;
+	margin-left:1em;	
+}
+
+.cmdLogs {
+	border: 1px solid lightgray;
+	width: 500px;
+}
+
+.logs {
+	clear: left;
+	float: none;
+}
+.debug {
+	clear: left;
+	width:90%;
+	margin-top:2em;
+    padding:1em;
+    display:block;
+}
+.Tdebug{
+	width:90%;
+	border-top: 1px solid gray;
+	color: red;
+}
+
+.dev-ctrl {
+		
+}
+.dev-cmd {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.hide {
+	/*visibility: collapse;*/
+	display: none;
+}
+
+.clearfix:after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+.clearfix { display: inline-block; }
+
+* html .clearfix { height: 1%; }
+
+.clearfix { display: block; }

@@ -1,0 +1,65 @@
+.marqueHeader {
+    font-size: 2em;
+    font-weight: 100;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.marqueContainer {
+    padding:10px;
+    margin:auto;
+}
+.marqueHdrTableau {
+
+    display: table-cell; /* comportement visuel de cellule */
+    vertical-align: middle;
+}
+
+.marqueTable {
+    border-collapse: collapse;
+    margin: auto;
+}
+
+.col {
+    border: 1px solid gray;
+    font-size: .9em;
+    font-weight: 300;
+}
+
+.hdr {
+    text-align: center;
+    font-size: .9em;
+    font-weight: 800;
+}
+.points {
+    width: 6em;
+}
+.center {
+    text-align: center;
+}
+.ligne3 {
+  background-color:firebrick;
+  height:1.7em;
+  color: white;
+}
+.ligne0{
+    background-color:burlywood;
+    height:1.7em;
+}
+.ligne1 {
+    background-color: beige;
+    height:1.7em;
+}
+.light {
+    font-size: 0.7em;
+    color: gray;
+}
+
+.right {
+    padding-right: 1em;
+    text-align: right;
+}
+
+.large {
+    width:30%;
+}
